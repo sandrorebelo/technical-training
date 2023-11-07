@@ -21,6 +21,7 @@ class Estate(models.Model):
         selection=[('north','North'),('south','South'),('East','East'),('west','West')],
         help="Choose the garden orientation"
     )
+    
     active = fields.Boolean(default=False)
     state = fields.Selection(
         selection=[('new','New'),('offer_received','Offer Received'),('offer_accepted','Offer Accepted'),('sold','Sold'),('canceled','Canceled')],
@@ -28,3 +29,15 @@ class Estate(models.Model):
         copy=False,
         default='new',
     )
+    
+    type_id = fields.Many2one("estate.type", string="Type")
+
+    salesman_id = fields.Many2one('res.partner', string='Salesman')
+    buyer_id = fields.Many2one('res.users', string='Buyer')
+
+class Type(models.Model):
+    _name = "estate.type"
+    _description = "Estate type"
+    
+    name = fields.Char()
+    
